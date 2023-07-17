@@ -4,25 +4,22 @@ const container = document.querySelector('.container');
 const changeBtn = document.querySelector('button');
 
 // Initialize variables
-let divArray = [];
-let divRowArray = [];
 let NUM_ROWS_COLS = 16;
 let gridSize = 900 / NUM_ROWS_COLS;
+let colorArray = ['rgb(255, 0, 0)', 'rgb(255, 255, 0)', 'rgb(0, 255, 0)', 'rgb(0, 255, 255)', 'rgb(0, 0, 255)', 'rgb(255, 0, 255)'];
 
-// Draw inital 16x16 grid
+// Draw initial 16x16 grid
 for(let i = 0; i < NUM_ROWS_COLS; i++) { // Rows
-    divArray[i] = [];
     let newRowDiv = document.createElement('div'); // New row (div element)
     newRowDiv.classList.add('row'); // Add style
 
     for(let j = 0; j < NUM_ROWS_COLS; j++) { // Columns
         let newBox = document.createElement('div'); // New box
         newBox.style.cssText = `background-color: #484848; width: ${gridSize}px; height: ${gridSize}px;`; // Add style
-        divArray[i][j] = newBox;
+        newBox.classList.add('grid-box');
         newRowDiv.appendChild(newBox); // Add to row
     }
 
-    divRowArray[i] = newRowDiv;
     container.appendChild(newRowDiv); // Add whole row to container
 }
 
@@ -42,20 +39,58 @@ changeBtn.addEventListener('click', e => {
     NUM_ROWS_COLS = newGridDimensions;
     gridSize = 900 / NUM_ROWS_COLS;
     for(let i = 0; i < NUM_ROWS_COLS; i++) { // Rows
-        divArray[i] = [];
         let newRowDiv = document.createElement('div'); // New row (div element)
         newRowDiv.classList.add('row'); // Add style
     
         for(let j = 0; j < NUM_ROWS_COLS; j++) { // Columns
             let newBox = document.createElement('div'); // New box
             newBox.style.cssText = `background-color: #484848; width: ${gridSize}px; height: ${gridSize}px;`; // Add style
-            divArray[i][j] = newBox;
+            newBox.classList.add('grid-box');
             newRowDiv.appendChild(newBox); // Add to row
         }
     
-        divRowArray[i] = newRowDiv;
         container.appendChild(newRowDiv); // Add whole row to container
     }
 
+    const gridBoxes = document.querySelectorAll('.grid-box');
+    gridBoxes.forEach(box => {
+        box.addEventListener('mouseover', e => {
+            let newColorIdx = Math.floor(Math.random() + 5);
+            box.style['background-color'] = colorArray[newColorIdx];
+
+            e.stopPropagation();
+        });
+    });
+
     e.stopPropagation();
+});
+
+function newColor(prevR, prevG, prevB) {
+    let newR = Math.floor(Math.random() * 256);
+    let newG = Math.floor(Math.random() * 256);
+    let newB = Math.floor(Math.random() * 256);
+
+    while(newR === prevR) {
+        newR = Math.floor(Math.random() * 256);
+    }
+
+    while(newG === prevG) {
+        newG = Math.floor(Math.random() * 256);
+    }
+
+    while(newB === prevB) {
+        newB = Math.floor(Math.random() * 256);
+    }
+
+    return [`rgb(${newR}, ${newG}, ${newB})`, newR, newG, newB];
+}
+
+let nextColor = newColor(0, 0, 0);
+container.addEventListener('mouseover', e => {
+    if(e.target.className !== 'grid-box') {
+        return;
+    }
+    
+    e.target.style['background-color'] = nextColor[0];
+    nextColor = newColor(nextColor[1], nextColor[2], nextColor[3]);
 });
