@@ -2,11 +2,13 @@
 const bodyTag = document.querySelector('body');
 const container = document.querySelector('.container');
 const changeBtn = document.querySelector('button');
+const nextColorDiv = document.querySelector('.next-color');
 
 // Initialize variables
 let NUM_ROWS_COLS = 16;
 let gridSize = 900 / NUM_ROWS_COLS;
 let colorArray = ['rgb(255, 0, 0)', 'rgb(255, 255, 0)', 'rgb(0, 255, 0)', 'rgb(0, 255, 255)', 'rgb(0, 0, 255)', 'rgb(255, 0, 255)'];
+let nextColor = newColor(0, 0, 0);
 
 // Draw initial 16x16 grid
 for(let i = 0; i < NUM_ROWS_COLS; i++) { // Rows
@@ -52,14 +54,13 @@ changeBtn.addEventListener('click', e => {
         container.appendChild(newRowDiv); // Add whole row to container
     }
 
-    const gridBoxes = document.querySelectorAll('.grid-box');
-    gridBoxes.forEach(box => {
-        box.addEventListener('mouseover', e => {
-            let newColorIdx = Math.floor(Math.random() + 5);
-            box.style['background-color'] = colorArray[newColorIdx];
-
-            e.stopPropagation();
-        });
+    container.addEventListener('mouseover', e => {
+        if(e.target.className !== 'grid-box') {
+            return;
+        }
+        
+        e.target.style['background-color'] = nextColor[0];
+        nextColor = newColor(nextColor[1], nextColor[2], nextColor[3]);
     });
 
     e.stopPropagation();
@@ -82,10 +83,13 @@ function newColor(prevR, prevG, prevB) {
         newB = Math.floor(Math.random() * 256);
     }
 
-    return [`rgb(${newR}, ${newG}, ${newB})`, newR, newG, newB];
+    let str = `rgb(${newR}, ${newG}, ${newB})`;
+
+    nextColorDiv.style['background-color'] = str;
+
+    return [str, newR, newG, newB];
 }
 
-let nextColor = newColor(0, 0, 0);
 container.addEventListener('mouseover', e => {
     if(e.target.className !== 'grid-box') {
         return;
