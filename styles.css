@@ -1,0 +1,27 @@
+* {
+    background-color: #121212;
+    color: white;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #242424;
+    padding: 12px;
+    margin: 0;
+}
+
+.container > .row {
+    background-color: #363636;
+    display: flex;
+    flex: 1;
+}
+
+.container > .row > .grid {
+    background-color: #484848;
+    /* border: 1px solid white; */
+    width: 5vw;
+    height: 5vh;
+}
