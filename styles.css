@@ -1,12 +1,9 @@
-* {
-    background-color: #121212;
-    color: white;
-}
-
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: #121212;
 }
 
 .container {
@@ -15,21 +12,38 @@ body {
     justify-content: center;
     align-items: center;
     background-color: #242424;
-    padding: 32px;
+    padding: 24px 24px 38px 24px;
     margin: 0;
     width: 900px;
     height: 900px;
 }
 
+.top-bar {
+    background-color: #242424;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: -6px 0 12px 0;
+}
+
+.top-bar > button {
+    color: #FFFFFF;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+}
+
 .container > .row {
     background-color: #363636;
     display: flex;
-    flex: 1;
+    flex: 1 1 0;
 }
 
 .container > .row > .grid {
     background-color: #484848;
-    /* border: 1px solid white; */
     width: 56.25px;
     height: 56.25px;
 }
