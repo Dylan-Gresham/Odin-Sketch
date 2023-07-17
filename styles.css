@@ -3,14 +3,22 @@
     color: white;
 }
 
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: #242424;
-    padding: 12px;
+    padding: 32px;
     margin: 0;
+    width: 900px;
+    height: 900px;
 }
 
 .container > .row {
@@ -22,6 +30,6 @@
 .container > .row > .grid {
     background-color: #484848;
     /* border: 1px solid white; */
-    width: 5vw;
-    height: 5vh;
+    width: 56.25px;
+    height: 56.25px;
 }
